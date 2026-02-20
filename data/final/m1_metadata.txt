@@ -1,0 +1,13 @@
+Milestone 1: Data Pipeline Metadata
+
+Input file: /Users/samuelabiel/github-classroom/Dr-Seagraves/qm2023-capstone-the-last-ones/data/raw/reit_master.csv
+Output file: /Users/samuelabiel/github-classroom/Dr-Seagraves/qm2023-capstone-the-last-ones/data/final/m1_panel.csv
+Panel structure: Entity=permno (REIT), Time=month
+
+Rows: 47695
+Unique REITs: 367
+Date range: 1986-12-01 to 2024-12-01
+
+Cleaning decisions:
+- Dropped rows with invalid month parsed from ym
+- Dropped rows with missing usdret (monthly return): 324
