@@ -1,0 +1,15 @@
+variable,dtype,description,source,category,unit,notes
+permno,Int64,CRSP permanent security identifier,CRSP,Identifier,,Panel entity key
+ticker,str,Stock ticker symbol,CRSP,Identifier,,Ticker observed for each permno-month
+rtype,float64,REIT type code (2=equity REIT),REIT/Ziman,REIT/Property,,
+ptype,float64,Property type code,REIT/Ziman,REIT/Property,,
+psub,float64,Property subtype code,REIT/Ziman,REIT/Property,,
+date,object,Observation date,CRSP,Date,,Original date field in source
+caldt,datetime64[ns],Calendar date,CRSP,Date,,
+ym,str,Year-month (YYYYmMM),CRSP,Date,,Raw monthly key
+usdret,float64,Monthly stock return (with dividends),CRSP,Return,"decimal (e.g. 0.01 = 1%)",Rows with missing values are dropped
+usdprc,float64,Close price (USD),CRSP,Price/Size,USD,
+market_equity,float32,Market capitalization,CRSP,Price/Size,millions USD,
+assets,float32,Total assets,Compustat,Accounting,millions USD,
+sales,float32,Net sales/revenue,Compustat,Accounting,millions USD,
+month,datetime64[ns],Month key parsed from ym (YYYY-MM-01),Derived,Derived,,Panel time key
