@@ -6,6 +6,8 @@ ChatGPT was used to:
 - Draft the Python data pipeline script to load, clean, and export an analysis-ready panel dataset.
 - Provide debugging help for environment issues (installing pandas, using python3).
 
+Copiolet was used to form code and help understand the data to form hypotheses. 
+
 ## What I verified myself
 - Confirmed the REIT dataset file was placed in `data/raw/` and renamed to `reit_master.csv`.
 - Ran the pipeline end-to-end and confirmed outputs were created in `data/final/`.
