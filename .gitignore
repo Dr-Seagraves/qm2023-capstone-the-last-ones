@@ -1,0 +1,11 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Generated and raw data artifacts (too large for git; store externally)
+data/raw/converted/
+data/processed/cleaned/
+data/final/
+
+# Local env
+.venv/
