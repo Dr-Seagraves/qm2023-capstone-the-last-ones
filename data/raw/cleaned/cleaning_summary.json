@@ -1,0 +1,164 @@
+{
+  "raw_dir": "/workspaces/qm2023-capstone-the-last-ones/data/raw",
+  "clean_dir": "/workspaces/qm2023-capstone-the-last-ones/data/raw/cleaned",
+  "results": [
+    {
+      "source_name": "REIT_data_dictionary.csv",
+      "output_name": "REIT_data_dictionary_cleaned.csv",
+      "rows_in": 449,
+      "rows_after_required": 449,
+      "rows_after_outliers": 305,
+      "dropped_missing_required": 0,
+      "dropped_outliers": 144,
+      "required_fields": [],
+      "outlier_columns": [
+        "variable",
+        "dtype",
+        "description",
+        "source",
+        "category",
+        "unit",
+        "missing_pct",
+        "min",
+        "max",
+        "example",
+        "notes"
+      ],
+      "group_columns": []
+    },
+    {
+      "source_name": "STAGING_world_NewFormat.csv",
+      "output_name": "STAGING_world_NewFormat_cleaned.csv",
+      "rows_in": 300609,
+      "rows_after_required": 300609,
+      "rows_after_outliers": 273119,
+      "dropped_missing_required": 0,
+      "dropped_outliers": 27490,
+      "required_fields": [
+        "REF_AREA",
+        "TIME_PERIOD",
+        "ENERGY_PRODUCT",
+        "FLOW_BREAKDOWN",
+        "UNIT_MEASURE",
+        "OBS_VALUE"
+      ],
+      "outlier_columns": [
+        "OBS_VALUE"
+      ],
+      "group_columns": [
+        "ENERGY_PRODUCT",
+        "FLOW_BREAKDOWN",
+        "UNIT_MEASURE"
+      ]
+    },
+    {
+      "source_name": "fred_macro_raw.csv",
+      "output_name": "fred_macro_raw_cleaned.csv",
+      "rows_in": 433,
+      "rows_after_required": 433,
+      "rows_after_outliers": 433,
+      "dropped_missing_required": 0,
+      "dropped_outliers": 0,
+      "required_fields": [
+        "date",
+        "cpi_all_items",
+        "policy_rate",
+        "industrial_production"
+      ],
+      "outlier_columns": [
+        "cpi_all_items",
+        "policy_rate",
+        "industrial_production"
+      ],
+      "group_columns": []
+    },
+    {
+      "source_name": "jodi_gas_world_newformat_raw.zip:STAGING_world_NewFormat.csv",
+      "output_name": "jodi_gas_world_newformat_raw__STAGING_world_NewFormat_cleaned.csv",
+      "rows_in": 300609,
+      "rows_after_required": 300609,
+      "rows_after_outliers": 273119,
+      "dropped_missing_required": 0,
+      "dropped_outliers": 27490,
+      "required_fields": [
+        "REF_AREA",
+        "TIME_PERIOD",
+        "ENERGY_PRODUCT",
+        "FLOW_BREAKDOWN",
+        "UNIT_MEASURE",
+        "OBS_VALUE"
+      ],
+      "outlier_columns": [
+        "OBS_VALUE"
+      ],
+      "group_columns": [
+        "ENERGY_PRODUCT",
+        "FLOW_BREAKDOWN",
+        "UNIT_MEASURE"
+      ]
+    },
+    {
+      "source_name": "reit_master.csv",
+      "output_name": "reit_master_cleaned.csv",
+      "rows_in": 48019,
+      "rows_after_required": 48019,
+      "rows_after_outliers": 36380,
+      "dropped_missing_required": 0,
+      "dropped_outliers": 11639,
+      "required_fields": [
+        "date"
+      ],
+      "outlier_columns": [
+        "permno",
+        "ticker",
+        "comnam",
+        "rtype",
+        "ptype",
+        "psub",
+        "date",
+        "caldt",
+        "ym",
+        "usdret",
+        "usdprc",
+        "market_equity",
+        "assets",
+        "sales",
+        "net_income",
+        "book_equity",
+        "debt_at",
+        "cash_at",
+        "ocf_at",
+        "roe",
+        "btm",
+        "beta"
+      ],
+      "group_columns": []
+    },
+    {
+      "source_name": "world_bank_wdi_raw.csv",
+      "output_name": "world_bank_wdi_raw_cleaned.csv",
+      "rows_in": 87780,
+      "rows_after_required": 52852,
+      "rows_after_outliers": 49808,
+      "dropped_missing_required": 34928,
+      "dropped_outliers": 3044,
+      "required_fields": [
+        "indicator_id",
+        "country_iso3",
+        "year",
+        "value"
+      ],
+      "outlier_columns": [
+        "value"
+      ],
+      "group_columns": [
+        "indicator_id"
+      ]
+    }
+  ],
+  "skipped_binary_files": [
+    "NewProcedure_JODI_Gas_merged_WDB20260218.ivt",
+    "NewProcedure_World_Primary.ivt",
+    "NewProcedure_World_Secondary.ivt"
+  ]
+}
