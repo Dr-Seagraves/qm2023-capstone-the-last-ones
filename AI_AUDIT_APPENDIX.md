@@ -38,3 +38,25 @@ GPT Codex in Github Copiolet was used to:
 - `data/final/m1_panel.csv` — removed empty column `obs_status`
 - `data/final/m1_metadata.txt` — updated column count and added cleaning decision entry
 - `code/merge_final_panel.py` — added `dropna(axis=1, how='all')` step with metadata logging
+
+---
+
+## Session: March 11, 2026 — Git Push Fix & Repository Cleanup
+
+### What AI did
+- Diagnosed a `pack-objects died of signal 15` git push failure caused by large files (up to 809MB) included in 4 unpushed commits
+- Performed a `git reset --soft origin/main` to rewind the unpushed commits while preserving all file changes on disk
+- Updated `.gitignore` to permanently exclude `data/raw/converted/`, `data/raw/cleaned/`, and `data/processed/cleaned/` from future commits
+- Unstaged all large raw/converted CSV files from the index
+- Force-added the `data/final/` output files (`m1_panel.csv`, `m1_metadata.txt`, `m1_data_dictionary.csv`) which were previously gitignored
+- Created a clean single commit and successfully pushed to GitHub (`main -> main`)
+
+### What I verified myself
+- Approved the soft-reset plan before it was executed
+- Confirmed the final commit contents looked correct before push
+- Verified the push succeeded on GitHub
+
+### Files modified
+- `.gitignore` — added exclusions for `data/raw/converted/`, `data/raw/cleaned/`
+- `data/final/m1_panel.csv`, `data/final/m1_metadata.txt`, `data/final/m1_data_dictionary.csv` — added to repo for first time
+- `code/consolidate_datasets.py`, `code/merge_final_panel.py`, `code/run_full_pipeline.py` — added to repo for first time
