@@ -4,7 +4,9 @@ __pycache__/
 
 # Generated and raw data artifacts (too large for git; store externally)
 data/raw/converted/
+data/raw/cleaned/
 data/processed/cleaned/
+# final/ is committed intentionally — force-add with git add -f
 data/final/
 
 # Local env

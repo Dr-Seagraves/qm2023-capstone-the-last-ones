@@ -1,0 +1,19 @@
+Milestone 1: Data Pipeline Metadata
+
+Input file: /workspaces/qm2023-capstone-the-last-ones/data/processed/m1_reit_base.csv
+Output file: /workspaces/qm2023-capstone-the-last-ones/data/final/m1_panel.csv
+Panel structure: Consolidated energy + macro + development indicators
+
+Rows: 323359
+Columns: 19
+
+Data Sources:
+- FRED: Federal Reserve macro indicators
+- JODI: IEA oil and gas production data
+- WDI: World Bank development indicators
+
+Cleaning decisions:
+- Dropped rows with all missing values: 0
+- Removed duplicate rows: 0
+- Standardized column names to lowercase
+- Dropped fully-empty columns (1): ['obs_status'] — column contained no data across all rows and was removed to reduce file size before commit
