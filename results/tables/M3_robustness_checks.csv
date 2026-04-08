@@ -1,0 +1,7 @@
+check,variable,coef,p_value,nobs
+Alternative lag 2,gas_import_shock_lag2,-0.00037152800506554557,0.7536834178451195,388.0
+Alternative lag 3,gas_import_shock_lag3,0.0001497109637707856,0.7268103090812819,347.0
+Exclude year 2020,gas_import_shock_lag1,-0.0005715318202260291,0.4851959503098513,391.0
+Subsample high dependence,gas_import_shock_lag1,-0.0006083329168969961,0.16523784522228757,290.0
+Subsample low dependence,gas_import_shock_lag1,-0.00044377229468473125,0.584633863838592,140.0
+Placebo DiD pre-2022,placebo_interaction,0.7342015359511145,0.41106244822280047,371.0

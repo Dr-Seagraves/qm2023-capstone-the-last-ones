@@ -142,3 +142,28 @@ python code/merge_final_panel.py
 python code/config_paths.py
 ```
 This confirms that the project structure is correct and all paths are accessible.
+
+## Milestone 3: Econometric Models
+
+Run the Milestone 3 script from the project root:
+
+```bash
+python capstone_models.py
+```
+
+This script implements the required M3 components:
+
+1. **Model A (Required)**: Two-way Fixed Effects panel regression with clustered standard errors.
+2. **Model B**: Difference-in-Differences specification with country and year fixed effects.
+3. **Diagnostics**: Breusch-Pagan test, VIF table, residual-vs-fitted plot, and Q-Q plot.
+4. **Robustness Checks**: Alternative lags, exclusion of 2020, dependence subsamples, and DiD placebo test.
+
+### M3 Outputs
+
+- **Regression tables:** `results/tables/M3_regression_comparison_table.csv`
+- **Model notes:** `results/tables/M3_model_notes.csv`
+- **Diagnostics table:** `results/tables/M3_vif_table.csv`
+- **Robustness table:** `results/tables/M3_robustness_checks.csv`
+- **Summary metrics:** `results/tables/M3_summary_metrics.json`
+- **Diagnostic figures:** `results/figures/M3_residuals_vs_fitted.png`, `results/figures/M3_qq_plot.png`
+- **Interpretation memo:** `results/reports/M3_interpretation.md`

@@ -1,0 +1,13 @@
+metric,value
+Model A entity FE,Yes
+Model A time FE,Yes
+Model A clustered SE,Yes (entity)
+Model A observations,430
+Model A R2 within,0.12413215867133998
+Model B country FE,Yes
+Model B year FE,Yes
+Model B clustered SE,Yes (country)
+Model B observations,477
+Model B R2,0.7564364687729384
+BP p-value,0.15877822952299447
+Max VIF,2.0410422154396803

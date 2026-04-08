@@ -60,3 +60,48 @@ GPT Codex in Github Copiolet was used to:
 - `.gitignore` — added exclusions for `data/raw/converted/`, `data/raw/cleaned/`
 - `data/final/m1_panel.csv`, `data/final/m1_metadata.txt`, `data/final/m1_data_dictionary.csv` — added to repo for first time
 - `code/consolidate_datasets.py`, `code/merge_final_panel.py`, `code/run_full_pipeline.py` — added to repo for first time
+
+---
+
+## Session: April 8, 2026 — Milestone 3 Econometric Models
+
+### What AI did
+- Extracted and reviewed `README.pdf` and `rubric.pdf` requirements to ensure M3 coverage
+- Installed required Python packages for econometric modeling (`linearmodels`, `statsmodels`, `pycountry`, etc.)
+- Built a full M3 script `capstone_models.py` implementing:
+	- Model A: two-way fixed effects with clustered entity SEs
+	- Model B: Difference-in-Differences with country and year fixed effects
+	- Diagnostics: Breusch-Pagan test, VIF, residual and Q-Q plots
+	- Robustness checks: alternative lags, excluding 2020, dependence subsamples, placebo DiD
+- Generated publication-oriented outputs in `results/tables/`, `results/figures/`, and `results/reports/M3_interpretation.md`
+- Added M3 run instructions to `README.md`
+- Added smoke tests in `tests/test_m3_models.py` so local tests run and validate model construction
+
+### What I verified myself
+- Ran `python capstone_models.py` successfully from project root and confirmed all output files were created
+- Reviewed coefficient signs and p-values in generated tables
+- Checked the interpretation memo and corrected a sign-direction mismatch in narrative language
+- Ran local tests and verified they pass
+
+### Prompts used for econometric decisions (examples)
+- "Build a two-way fixed effects model with clustered standard errors for panel inflation outcomes."
+- "Construct a DiD specification for high-energy-dependence countries after 2022."
+- "Run VIF, Breusch-Pagan, and residual diagnostics and summarize interpretation in an M3 memo."
+
+### AI output I corrected or refined
+- AI initially wrote an interpretation sentence implying stronger sensitivity while the interaction estimate was negative.
+- I corrected the memo logic to map interpretation text to the estimated interaction sign.
+
+### Files created/modified in this session
+- `capstone_models.py` (created)
+- `README.md` (updated with M3 section)
+- `requirements.txt` (created)
+- `tests/test_m3_models.py` (created)
+- `results/tables/M3_regression_comparison_table.csv` (generated)
+- `results/tables/M3_model_notes.csv` (generated)
+- `results/tables/M3_vif_table.csv` (generated)
+- `results/tables/M3_robustness_checks.csv` (generated)
+- `results/tables/M3_summary_metrics.json` (generated)
+- `results/figures/M3_residuals_vs_fitted.png` (generated)
+- `results/figures/M3_qq_plot.png` (generated)
+- `results/reports/M3_interpretation.md` (generated)
