@@ -334,6 +334,88 @@ def save_model_tables(model_a_results, did_results, diagnostics: Dict[str, float
     comparison.to_csv(TABLES_DIR / "M3_regression_comparison_table.csv", index=False)
     notes.to_csv(TABLES_DIR / "M3_model_notes.csv", index=False)
 
+    # Publication-style table: one model per column, with standard errors on separate rows.
+    variable_labels = {
+        "gas_import_shock_lag1": "Gas import shock (t-1)",
+        "shock_x_highdep_lag1": "Shock x high energy dependence",
+        "did_interaction": "High dependence x Post-2022",
+        "high_energy_dependence": "High energy dependence",
+        "post_2022": "Post-2022",
+        "gdp_growth": "GDP growth",
+        "imports_gdp": "Imports (% GDP)",
+    }
+    variable_order = [
+        "gas_import_shock_lag1",
+        "shock_x_highdep_lag1",
+        "did_interaction",
+        "high_energy_dependence",
+        "post_2022",
+        "gdp_growth",
+        "imports_gdp",
+    ]
+
+    def coef_with_stars(coef: float | None, pval: float | None) -> str:
+        if coef is None or pval is None or pd.isna(coef) or pd.isna(pval):
+            return ""
+        return f"{coef:.4f}{significance_stars(float(pval))}"
+
+    def se_in_parentheses(se: float | None) -> str:
+        if se is None or pd.isna(se):
+            return ""
+        return f"({float(se):.4f})"
+
+    pub_rows: List[Dict[str, str | int | float]] = []
+    for variable in variable_order:
+        label = variable_labels[variable]
+
+        a_coef = model_a_results.params.get(variable, np.nan)
+        a_p = model_a_results.pvalues.get(variable, np.nan)
+        a_se = model_a_results.std_errors.get(variable, np.nan)
+
+        b_coef = did_results.params.get(variable, np.nan)
+        b_p = did_results.pvalues.get(variable, np.nan)
+        b_se = did_results.bse.get(variable, np.nan)
+
+        pub_rows.append(
+            {
+                "Term": label,
+                "Model (1) FE": coef_with_stars(a_coef, a_p),
+                "Model (2) DiD": coef_with_stars(b_coef, b_p),
+            }
+        )
+        pub_rows.append(
+            {
+                "Term": "",
+                "Model (1) FE": se_in_parentheses(a_se),
+                "Model (2) DiD": se_in_parentheses(b_se),
+            }
+        )
+
+    pub_rows.extend(
+        [
+            {"Term": "Country fixed effects", "Model (1) FE": "Yes", "Model (2) DiD": "Yes"},
+            {"Term": "Year fixed effects", "Model (1) FE": "Yes", "Model (2) DiD": "Yes"},
+            {"Term": "Clustered standard errors", "Model (1) FE": "Country", "Model (2) DiD": "Country"},
+            {"Term": "Observations", "Model (1) FE": int(model_a_results.nobs), "Model (2) DiD": int(did_results.nobs)},
+            {
+                "Term": "R-squared",
+                "Model (1) FE": f"{float(model_a_results.rsquared_within):.4f}",
+                "Model (2) DiD": f"{float(did_results.rsquared):.4f}",
+            },
+        ]
+    )
+
+    publication_table = pd.DataFrame(pub_rows)
+    publication_table.to_csv(TABLES_DIR / "M3_regression_publication_table.csv", index=False)
+    publication_table.to_latex(
+        TABLES_DIR / "M3_regression_publication_table.tex",
+        index=False,
+        escape=False,
+        column_format="lcc",
+        caption="Inflation Regressions: Fixed Effects and Difference-in-Differences",
+        label="tab:m3_regressions",
+    )
+
     return {
         "model_a_r2_within": float(model_a_results.rsquared_within),
         "model_a_n": float(model_a_results.nobs),
@@ -504,6 +586,8 @@ def main() -> None:
 
     print("Milestone 3 outputs generated:")
     print(f"- {TABLES_DIR / 'M3_regression_comparison_table.csv'}")
+    print(f"- {TABLES_DIR / 'M3_regression_publication_table.csv'}")
+    print(f"- {TABLES_DIR / 'M3_regression_publication_table.tex'}")
     print(f"- {TABLES_DIR / 'M3_robustness_checks.csv'}")
     print(f"- {TABLES_DIR / 'M3_vif_table.csv'}")
     print(f"- {FIGURES_DIR / 'M3_residuals_vs_fitted.png'}")
