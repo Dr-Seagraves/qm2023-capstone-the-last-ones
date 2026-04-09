@@ -17,47 +17,10 @@ Semester-long capstone for Statistics II: Data Analytics.
 
 Run `python code/config_paths.py` to verify paths.
 
-# QM 2023 Capstone Project: [The Last Ones]
-## Team Members
-- [Ashlynn Comstock] 
-- [Jariah Eyachabbe] 
-- [Samuel Abiel] 
-- [Luna Wolfe] 
-## Research Question
-["How strongly do oil and gas price shocks pass through to consumer inflation, and does pass-through differ between high- and low-energy-dependence countries?"] 
-## Data Sources & Coverage
+## Assignment Summary
 
-### 1. JODI (IEA Oil & Gas Database)
-- **Source:** International Energy Agency's Joint Oil Data Initiative
-- **Variables:** Oil/gas production, consumption, trade flows, prices
-- **Coverage:** 169+ countries | Monthly | 1990-2025
-- **Format:** Energy data in tabular (STAGING world newformat) and binary (IVT) formats
-- **Observations:** 273,119 rows after cleaning
-
-### 2. FRED (Federal Reserve Economic Data)
-- **Source:** Federal Reserve Bank of St. Louis
-- **Variables:** Economic indicators (inflation, policy rates, industrial production)
-- **Coverage:** USA | Monthly | 1954-2025
-- **API:** Automatically fetched via FRED API
-- **Observations:** 432 rows after cleaning
-
-### 3. WDI (World Bank Development Indicators)
-- **Source:** World Bank Open Data
-- **Variables:** GDP, imports/exports, energy consumption, economic development metrics
-- **Coverage:** 189 countries | Annual | 1960-2024
-- **API:** Automatically fetched via World Bank API
-- **Indicators:** EG.IMP.CONS.ZS, NY.GDP.MKTP.KD, FP.CPI.TOTL.ZG, NE.EXP.GNFS.ZS, NE.IMP.GNFS.ZS
-- **Observations:** 49,808 rows after cleaning
-
-### Final Consolidated Panel
-- **Total Rows:** 323,359 (FRED + JODI + WDI concatenated)
-- **Total Columns:** 20 standardized variables
-- **Output:** `data/final/m1_panel.csv`
-## Hypotheses (Preliminary)
-1. [Positive oil and gas price shocks increase inflation in the current and subsequent months]
-2. [Pass-through is stronger in high-energy-dependence countries than low-dependence countries.]
-3. [passthrough is asymethric, where passthrough is larger after positive shocks than negative shocks]
-## Repository Structure
+The assignment summary (team, research question, data coverage, hypotheses, and M3 snapshot) has been moved to:
+- `capstone_models_summary.md`
 
 ## Data Pipeline
 
@@ -165,5 +128,8 @@ This script implements the required M3 components:
 - **Diagnostics table:** `results/tables/M3_vif_table.csv`
 - **Robustness table:** `results/tables/M3_robustness_checks.csv`
 - **Summary metrics:** `results/tables/M3_summary_metrics.json`
+- **Summary metrics publication table (CSV):** `results/tables/M3_summary_metrics_publication_table.csv`
+- **Summary metrics publication table (Markdown):** `results/tables/M3_summary_metrics_publication_table.md`
+- **Summary metrics publication table (LaTeX):** `results/tables/M3_summary_metrics_publication_table.tex`
 - **Diagnostic figures:** `results/figures/M3_residuals_vs_fitted.png`, `results/figures/M3_qq_plot.png`
 - **Interpretation memo:** `results/reports/M3_interpretation.md`

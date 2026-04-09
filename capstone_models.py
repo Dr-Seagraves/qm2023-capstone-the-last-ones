@@ -20,6 +20,7 @@ from __future__ import annotations
 import json
 import importlib.util
 from pathlib import Path
+import textwrap
 import sys
 from typing import Dict, List, Tuple
 
@@ -411,10 +412,54 @@ def save_model_tables(model_a_results, did_results, diagnostics: Dict[str, float
         TABLES_DIR / "M3_regression_publication_table.tex",
         index=False,
         escape=False,
-        column_format="lcc",
+        column_format="p{7.0cm}cc",
         caption="Inflation Regressions: Fixed Effects and Difference-in-Differences",
         label="tab:m3_regressions",
     )
+
+    # Hand-crafted LaTeX improves readability while preserving source estimates.
+    regression_latex = textwrap.dedent(
+        f"""
+        \\begin{{table}}[!htbp]
+        \\centering
+        \\caption{{Inflation Regressions: Fixed Effects and Difference-in-Differences}}
+        \\label{{tab:m3_regressions}}
+        \\begin{{tabular}}{{p{{7.0cm}}cc}}
+        \\toprule
+        & Model (1) FE & Model (2) DiD \\\\
+        \\midrule
+        Gas import shock (t-1) & {coef_with_stars(model_a_results.params.get('gas_import_shock_lag1', np.nan), model_a_results.pvalues.get('gas_import_shock_lag1', np.nan))} & {coef_with_stars(did_results.params.get('gas_import_shock_lag1', np.nan), did_results.pvalues.get('gas_import_shock_lag1', np.nan))} \\\\
+         & {se_in_parentheses(model_a_results.std_errors.get('gas_import_shock_lag1', np.nan))} & {se_in_parentheses(did_results.bse.get('gas_import_shock_lag1', np.nan))} \\\\
+        Shock x high energy dependence & {coef_with_stars(model_a_results.params.get('shock_x_highdep_lag1', np.nan), model_a_results.pvalues.get('shock_x_highdep_lag1', np.nan))} &  \\\\
+         & {se_in_parentheses(model_a_results.std_errors.get('shock_x_highdep_lag1', np.nan))} &  \\\\
+        High dependence x Post-2022 &  & {coef_with_stars(did_results.params.get('did_interaction', np.nan), did_results.pvalues.get('did_interaction', np.nan))} \\\\
+         &  & {se_in_parentheses(did_results.bse.get('did_interaction', np.nan))} \\\\
+        High energy dependence &  & {coef_with_stars(did_results.params.get('high_energy_dependence', np.nan), did_results.pvalues.get('high_energy_dependence', np.nan))} \\\\
+         &  & {se_in_parentheses(did_results.bse.get('high_energy_dependence', np.nan))} \\\\
+        Post-2022 &  & {coef_with_stars(did_results.params.get('post_2022', np.nan), did_results.pvalues.get('post_2022', np.nan))} \\\\
+         &  & {se_in_parentheses(did_results.bse.get('post_2022', np.nan))} \\\\
+        GDP growth & {coef_with_stars(model_a_results.params.get('gdp_growth', np.nan), model_a_results.pvalues.get('gdp_growth', np.nan))} & {coef_with_stars(did_results.params.get('gdp_growth', np.nan), did_results.pvalues.get('gdp_growth', np.nan))} \\\\
+         & {se_in_parentheses(model_a_results.std_errors.get('gdp_growth', np.nan))} & {se_in_parentheses(did_results.bse.get('gdp_growth', np.nan))} \\\\
+        Imports (\\% GDP) & {coef_with_stars(model_a_results.params.get('imports_gdp', np.nan), model_a_results.pvalues.get('imports_gdp', np.nan))} & {coef_with_stars(did_results.params.get('imports_gdp', np.nan), did_results.pvalues.get('imports_gdp', np.nan))} \\\\
+         & {se_in_parentheses(model_a_results.std_errors.get('imports_gdp', np.nan))} & {se_in_parentheses(did_results.bse.get('imports_gdp', np.nan))} \\\\
+        \\midrule
+        Country fixed effects & Yes & Yes \\\\
+        Year fixed effects & Yes & Yes \\\\
+        Clustered standard errors & Country & Country \\\\
+        Observations & {int(model_a_results.nobs)} & {int(did_results.nobs)} \\\\
+        R-squared & {float(model_a_results.rsquared_within):.4f} & {float(did_results.rsquared):.4f} \\\\
+        \\bottomrule
+        \\end{{tabular}}
+        \\vspace{{0.3em}}
+
+        \\begin{{minipage}}{{0.95\\linewidth}}
+        \\footnotesize
+        Notes: Standard errors (clustered by country) are in parentheses. Model (1) reports within-$R^2$ from two-way fixed effects. Model (2) reports overall $R^2$ from DiD with country and year fixed effects. Significance: * $p<0.10$, ** $p<0.05$, *** $p<0.01$.
+        \\end{{minipage}}
+        \\end{{table}}
+        """
+    ).strip() + "\n"
+    (TABLES_DIR / "M3_regression_publication_table.tex").write_text(regression_latex, encoding="utf-8")
 
     return {
         "model_a_r2_within": float(model_a_results.rsquared_within),
@@ -508,6 +553,105 @@ def run_robustness(panel: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def save_summary_publication_tables(summary: Dict[str, float], diagnostics: Dict[str, float]) -> None:
+    summary_rows = [
+        {
+            "Section": "Model fit",
+            "Metric": "Model (1) FE within R-squared",
+            "Value": f"{summary['model_a_r2_within']:.4f}",
+            "Interpretation": "Share of within-country inflation variation explained by FE model.",
+        },
+        {
+            "Section": "Model fit",
+            "Metric": "Model (1) FE observations",
+            "Value": f"{int(summary['model_a_n'])}",
+            "Interpretation": "Country-year observations used in Model (1).",
+        },
+        {
+            "Section": "Model fit",
+            "Metric": "Model (2) DiD R-squared",
+            "Value": f"{summary['model_b_r2']:.4f}",
+            "Interpretation": "Overall fit for DiD model with fixed effects.",
+        },
+        {
+            "Section": "Model fit",
+            "Metric": "Model (2) DiD observations",
+            "Value": f"{int(summary['model_b_n'])}",
+            "Interpretation": "Country-year observations used in Model (2).",
+        },
+        {
+            "Section": "Core coefficients",
+            "Metric": "Model (1) gas shock (t-1)",
+            "Value": f"{summary['coef_a_shock']:.4f}",
+            "Interpretation": "Marginal pass-through of lagged gas-import shock.",
+        },
+        {
+            "Section": "Core coefficients",
+            "Metric": "Model (1) gas shock p-value",
+            "Value": f"{summary['p_a_shock']:.3f}",
+            "Interpretation": "Statistical significance for Model (1) shock coefficient.",
+        },
+        {
+            "Section": "Core coefficients",
+            "Metric": "Model (1) shock x high dependence",
+            "Value": f"{summary['coef_a_interaction']:.4f}",
+            "Interpretation": "Incremental shock effect in high-dependence countries.",
+        },
+        {
+            "Section": "Core coefficients",
+            "Metric": "Model (1) interaction p-value",
+            "Value": f"{summary['p_a_interaction']:.3f}",
+            "Interpretation": "Statistical significance for interaction in Model (1).",
+        },
+        {
+            "Section": "Core coefficients",
+            "Metric": "Model (2) DiD interaction",
+            "Value": f"{summary['coef_b_did']:.4f}",
+            "Interpretation": "Differential post-2022 inflation shift for treated group.",
+        },
+        {
+            "Section": "Core coefficients",
+            "Metric": "Model (2) DiD p-value",
+            "Value": f"{summary['p_b_did']:.3f}",
+            "Interpretation": "Statistical significance for DiD interaction.",
+        },
+        {
+            "Section": "Diagnostics",
+            "Metric": "Breusch-Pagan p-value",
+            "Value": f"{diagnostics['bp_pvalue']:.4f}",
+            "Interpretation": "Higher values indicate weaker evidence of heteroskedasticity.",
+        },
+        {
+            "Section": "Diagnostics",
+            "Metric": "Maximum VIF",
+            "Value": f"{diagnostics['max_vif']:.2f}",
+            "Interpretation": "Largest multicollinearity indicator among baseline covariates.",
+        },
+    ]
+
+    summary_df = pd.DataFrame(summary_rows)
+    summary_df.to_csv(TABLES_DIR / "M3_summary_metrics_publication_table.csv", index=False)
+    md_lines = [
+        "| Section | Metric | Value | Interpretation |",
+        "|---|---|---:|---|",
+    ]
+    for _, row in summary_df.iterrows():
+        section = str(row["Section"]).replace("|", "\\|")
+        metric = str(row["Metric"]).replace("|", "\\|")
+        value = str(row["Value"]).replace("|", "\\|")
+        interp = str(row["Interpretation"]).replace("|", "\\|")
+        md_lines.append(f"| {section} | {metric} | {value} | {interp} |")
+    (TABLES_DIR / "M3_summary_metrics_publication_table.md").write_text("\n".join(md_lines) + "\n", encoding="utf-8")
+    summary_df.to_latex(
+        TABLES_DIR / "M3_summary_metrics_publication_table.tex",
+        index=False,
+        escape=False,
+        column_format="lp{5.6cm}lp{6.2cm}",
+        caption="M3 Summary Metrics and Diagnostics",
+        label="tab:m3_summary_metrics",
+    )
+
+
 def write_interpretation_memo(summary: Dict[str, float], diagnostics: Dict[str, float], robustness: pd.DataFrame) -> None:
     robust_lines = []
     for _, row in robustness.iterrows():
@@ -578,6 +722,7 @@ def main() -> None:
     diagnostics = run_diagnostics(model_a, model_a_data, predictors)
     summary = save_model_tables(model_a, model_b, diagnostics)
     robustness = run_robustness(panel)
+    save_summary_publication_tables(summary, diagnostics)
 
     write_interpretation_memo(summary, diagnostics, robustness)
 
@@ -589,6 +734,9 @@ def main() -> None:
     print(f"- {TABLES_DIR / 'M3_regression_publication_table.csv'}")
     print(f"- {TABLES_DIR / 'M3_regression_publication_table.tex'}")
     print(f"- {TABLES_DIR / 'M3_robustness_checks.csv'}")
+    print(f"- {TABLES_DIR / 'M3_summary_metrics_publication_table.csv'}")
+    print(f"- {TABLES_DIR / 'M3_summary_metrics_publication_table.md'}")
+    print(f"- {TABLES_DIR / 'M3_summary_metrics_publication_table.tex'}")
     print(f"- {TABLES_DIR / 'M3_vif_table.csv'}")
     print(f"- {FIGURES_DIR / 'M3_residuals_vs_fitted.png'}")
     print(f"- {FIGURES_DIR / 'M3_qq_plot.png'}")

@@ -1,9 +1,10 @@
-\begin{table}
+\begin{table}[!htbp]
+\centering
 \caption{Inflation Regressions: Fixed Effects and Difference-in-Differences}
 \label{tab:m3_regressions}
-\begin{tabular}{lcc}
+\begin{tabular}{p{7.0cm}cc}
 \toprule
-Term & Model (1) FE & Model (2) DiD \\
+& Model (1) FE & Model (2) DiD \\
 \midrule
 Gas import shock (t-1) & -0.0001 & -0.0005 \\
  & (0.0009) & (0.0004) \\
@@ -17,8 +18,9 @@ Post-2022 &  & 1.7571** \\
  &  & (0.6866) \\
 GDP growth & -0.2360*** & -0.2469*** \\
  & (0.0756) & (0.0785) \\
-Imports (% GDP) & 0.1198** & 0.0990* \\
+Imports (\% GDP) & 0.1198** & 0.0990* \\
  & (0.0587) & (0.0509) \\
+\midrule
 Country fixed effects & Yes & Yes \\
 Year fixed effects & Yes & Yes \\
 Clustered standard errors & Country & Country \\
@@ -26,4 +28,10 @@ Observations & 430 & 477 \\
 R-squared & 0.1241 & 0.7564 \\
 \bottomrule
 \end{tabular}
+\vspace{0.3em}
+
+\begin{minipage}{0.95\linewidth}
+\footnotesize
+Notes: Standard errors (clustered by country) are in parentheses. Model (1) reports within-$R^2$ from two-way fixed effects. Model (2) reports overall $R^2$ from DiD with country and year fixed effects. Significance: * $p<0.10$, ** $p<0.05$, *** $p<0.01$.
+\end{minipage}
 \end{table}
