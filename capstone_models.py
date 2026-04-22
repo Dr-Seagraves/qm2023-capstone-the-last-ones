@@ -661,6 +661,23 @@ def write_interpretation_memo(summary: Dict[str, float], diagnostics: Dict[str, 
 
     bp_flag = "evidence of heteroskedasticity" if diagnostics["bp_pvalue"] < 0.05 else "no strong heteroskedasticity evidence"
     interaction_direction = "stronger" if summary["coef_a_interaction"] > 0 else "weaker"
+    shock_direction = "positive" if summary["coef_a_shock"] > 0 else "negative"
+
+    def hypothesis_assessment(coef: float, p_value: float, expected_positive: bool) -> str:
+        direction_matches = (coef > 0) if expected_positive else (coef < 0)
+        if p_value < 0.05 and direction_matches:
+            return "supported"
+        if p_value < 0.10 and direction_matches:
+            return "weakly supported"
+        if p_value < 0.05 and not direction_matches:
+            return "not supported (estimate is statistically significant in the opposite direction)"
+        return "not supported"
+
+    h1_assessment = hypothesis_assessment(summary["coef_a_shock"], summary["p_a_shock"], expected_positive=True)
+    h2_a_assessment = hypothesis_assessment(
+        summary["coef_a_interaction"], summary["p_a_interaction"], expected_positive=True
+    )
+    h2_b_assessment = hypothesis_assessment(summary["coef_b_did"], summary["p_b_did"], expected_positive=True)
 
     memo = f"""# M3 Interpretation Memo
 
@@ -679,7 +696,7 @@ How strongly do natural-gas import shocks pass through to inflation, and does pa
 - Model B DiD interaction coefficient: {summary['coef_b_did']:.4f} (p = {summary['p_b_did']:.3f}).
 
 Economic interpretation:
-- The direct gas-import-shock pass-through estimate in this panel is small in magnitude in annual percentage-point terms.
+- The direct gas-import-shock pass-through estimate in this panel is small in magnitude and {shock_direction} in annual percentage-point terms.
 - The interaction term in Model A indicates {interaction_direction} inflation sensitivity in high-energy-dependence countries relative to low-dependence countries when shocks occur.
 - The DiD interaction quantifies whether high-dependence countries experienced a differential post-2022 inflation shift after controls and fixed effects.
 
@@ -705,8 +722,8 @@ Interpretation of robustness:
 - Remaining omitted-variable risks may include monetary policy differences, exchange-rate moves, and country-specific stabilization policies.
 
 ## Conclusion for Hypothesis
-- Hypothesis 1 (positive pass-through): estimated pass-through exists but is modest in this specification.
-- Hypothesis 2 (stronger pass-through in high dependence countries): supported directionally by the interaction structure and subgroup checks.
+- Hypothesis 1 (positive pass-through): {h1_assessment} in this baseline specification.
+- Hypothesis 2 (stronger pass-through in high dependence countries): {h2_a_assessment} by Model A interaction and {h2_b_assessment} by DiD interaction.
 - Hypothesis 3 (asymmetry): not fully tested in this baseline and is a recommended extension for M4.
 """
 

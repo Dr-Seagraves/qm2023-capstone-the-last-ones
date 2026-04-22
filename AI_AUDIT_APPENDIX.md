@@ -1,20 +1,26 @@
-# AI Audit Appendix (Milestone 1)
+# AI Audit Appendix (Milestones 1-3)
+
+Last updated: 2026-04-22
 
 ## How AI was used
-GPT Codex in Github Copiolet was used to:
--Help import data and create seperate and merged fetch files for each dataset
--Convert binary datasets into tabular and readable csv files
--Clean each dataset and standardize date and format
--Create a consolodated data dictionary 
--Help understand the data and form hypotheses
+GPT Codex in GitHub Copilot was used to:
+- Help import data and create separate and merged fetch files for each dataset
+- Convert binary datasets into tabular and readable csv files
+- Clean each dataset and standardize date and format
+- Create a consolidated data dictionary
+- Help understand the data and form hypotheses
 
 ## What I verified myself
 - Checked the raw folder for the raw csv datasets appear as they were fetched
 - Visually combed through the datasets pre and post cleaning decisions
--Renamed and created folders to keep organized through cleaning and finalizing process
--Compared the agent outputs to the M1 capstone document in Harvey
--Read what the agent was doing at each step to ensure it interpreted my prompts correctly
--provbided supplamentry links to help the agent pull data
+- Renamed and created folders to keep organized through cleaning and finalizing process
+- Compared the agent outputs to the M1 capstone document in Harvey
+- Read what the agent was doing at each step to ensure it interpreted my prompts correctly
+- Provided supplementary links to help the agent pull data
+
+## Prompt-Date Traceability
+- Session headings include explicit dates for each AI-assisted work block.
+- Prompt examples are recorded under the April 8, 2026 M3 session and correspond to that dated modeling work.
 
 ## Files created/modified with AI assistance
 

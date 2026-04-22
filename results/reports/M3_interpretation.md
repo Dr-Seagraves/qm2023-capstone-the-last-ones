@@ -15,7 +15,7 @@ How strongly do natural-gas import shocks pass through to inflation, and does pa
 - Model B DiD interaction coefficient: -0.2502 (p = 0.811).
 
 Economic interpretation:
-- The direct gas-import-shock pass-through estimate in this panel is small in magnitude in annual percentage-point terms.
+- The direct gas-import-shock pass-through estimate in this panel is small in magnitude and negative in annual percentage-point terms.
 - The interaction term in Model A indicates weaker inflation sensitivity in high-energy-dependence countries relative to low-dependence countries when shocks occur.
 - The DiD interaction quantifies whether high-dependence countries experienced a differential post-2022 inflation shift after controls and fixed effects.
 
@@ -46,6 +46,6 @@ Interpretation of robustness:
 - Remaining omitted-variable risks may include monetary policy differences, exchange-rate moves, and country-specific stabilization policies.
 
 ## Conclusion for Hypothesis
-- Hypothesis 1 (positive pass-through): estimated pass-through exists but is modest in this specification.
-- Hypothesis 2 (stronger pass-through in high dependence countries): supported directionally by the interaction structure and subgroup checks.
+- Hypothesis 1 (positive pass-through): not supported in this baseline specification.
+- Hypothesis 2 (stronger pass-through in high dependence countries): not supported by Model A interaction and not supported by DiD interaction.
 - Hypothesis 3 (asymmetry): not fully tested in this baseline and is a recommended extension for M4.
