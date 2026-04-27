@@ -10,6 +10,7 @@ Semester-long capstone for Statistics II: Data Analytics.
 - **data/raw/** — Original data (read-only)
 - **data/processed/** — Intermediate cleaning outputs
 - **data/final/** — M1 output: analysis-ready panel
+- **Guidlelines (readme)/** -Readme, rubric, and requirements 
 - **results/figures/** — Visualizations
 - **results/tables/** — Regression tables, summary stats
 - **results/reports/** — Milestone memos

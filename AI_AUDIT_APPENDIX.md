@@ -1,5 +1,7 @@
 # AI Audit Appendix (Milestone 1)
 
+Note: The investment memo generated on April 27, 2026 is an early draft and a jumping off point, not a final product.
+
 ## How AI was used
 GPT Codex in Github Copiolet was used to:
 -Help import data and create seperate and merged fetch files for each dataset
@@ -105,3 +107,20 @@ GPT Codex in Github Copiolet was used to:
 - `results/figures/M3_residuals_vs_fitted.png` (generated)
 - `results/figures/M3_qq_plot.png` (generated)
 - `results/reports/M3_interpretation.md` (generated)
+
+---
+
+## Session: April 27, 2026 — Investment Memo Draft (Milestone 4)
+
+### What AI did
+- Drafted an investment memo in Word format summarizing the research question, methods, findings, and limitations
+- Generated a first-pass document as a jumping off point, not a final product
+- Created a small JS script to render the memo to DOCX
+
+### What I verified myself
+- Confirmed the memo accurately reflects the M3 interpretation and robustness results
+- Checked that the memo is clearly labeled as an early draft and not a final deliverable
+
+### Files created/modified in this session
+- `investment_memo.docx` (generated)
+- `create_investment_memo.js` (created)
